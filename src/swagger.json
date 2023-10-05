@@ -1,0 +1,78 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Busca salários no Glassdoor",
+    "description": "Um pequeno projeto para praticar Web scrapping",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/glassdoor",
+  "schemes": ["http"],
+  "paths": {
+    "/glassdoor": {
+      "post": {
+        "summary": "Buscar Salários",
+        "tags": ["Glassdoor"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "link": "string"
+                }
+              },
+              "examples": {
+                "success": {
+                  "value": {
+                    "link": "https://www.glassdoor.com.br/Salários/desenvolvedor-júnior-salário-SRCH_KO0,20_IP1.htm"
+                  }
+                },
+                "error": {
+                  "value": {
+                    "link": "https://www.glassdoor.com.br/Salários/index.htm"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": [
+                      {
+                        "companie": "string",
+                        "salary": "string",
+                        "job": "string",
+                        "payment": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "the link sent does not have job offers"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
